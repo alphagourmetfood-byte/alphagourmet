@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Gourmet - Monte sua Assinatura Personalizada</title>
+    <title>Alpha Gourmet - Assinatura Personalizada</title>
     <style>
         :root {
             --bg-color: #0d0f0e;
@@ -30,6 +30,8 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            position: relative;
+            padding-bottom: 120px;
         }
 
         header {
@@ -38,7 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .logo-area {
@@ -55,7 +57,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 8px;
             color: var(--primary-gold);
             font-weight: bold;
             text-align: center;
@@ -92,188 +94,160 @@
             background-color: #25d366;
         }
 
-        .main-title-container {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        h1 {
-            font-size: 26px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .section-header {
+        .section-title {
             width: 100%;
             max-width: 1100px;
+            color: var(--primary-gold);
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 30px 0 20px 0;
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 25px;
-            color: var(--primary-gold);
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
         }
 
-        .plans-grid {
+        /* Carrossel e Cartões com Bordas Bem Arredondadas */
+        .carousel-container {
             width: 100%;
             max-width: 1100px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            position: relative;
             margin-bottom: 40px;
         }
 
-        .plan-card {
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .dish-card {
             background-color: var(--card-bg);
-            border: 2px solid var(--card-border);
-            border-radius: 16px;
-            padding: 25px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .plan-card.active-border {
-            border-color: var(--primary-gold);
-        }
-
-        .plan-header {
+            border: 1px solid var(--card-border);
+            border-radius: 22px; /* Cantos bem arredondados estilo moderno */
+            padding: 20px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
-        .plan-title {
-            font-size: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
+        .dish-img-container {
+            width: 100%;
+            height: 190px;
+            border-radius: 16px; /* Imagem interna bem arredondada */
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #111;
         }
 
-        .plan-badge {
-            background-color: var(--primary-gold);
-            color: #000;
+        .dish-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dish-tag {
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
+            color: var(--primary-gold);
             text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
         }
 
-        .plan-desc {
-            color: var(--text-muted);
+        .dish-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .dish-desc {
             font-size: 13px;
-            margin-bottom: 25px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
             line-height: 1.4;
         }
 
-        .plan-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .option-box {
-            background: #111513;
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .option-box.selected {
-            background: var(--gold-gradient);
-            color: #000;
-            border-color: transparent;
-            font-weight: 600;
-        }
-
-        .option-box.selected .opt-price {
-            color: #000;
-        }
-
-        .opt-name {
-            font-size: 12px;
-            margin-bottom: 4px;
-        }
-
-        .opt-price {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary-gold);
-        }
-
-        .plan-footer {
+        .dish-counter {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid var(--card-border);
-            padding-top: 20px;
-        }
-
-        .plan-qty-label {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .qty-control {
-            display: flex;
-            align-items: center;
             background: #111513;
             border: 1px solid var(--card-border);
-            border-radius: 8px;
-            overflow: hidden;
+            border-radius: 14px;
+            padding: 8px 15px;
         }
 
-        .qty-btn {
-            background: none;
+        .counter-btn {
+            background: var(--primary-gold);
+            color: #000;
             border: none;
-            color: #fff;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
             cursor: pointer;
-            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s;
         }
 
-        .qty-value {
-            width: 35px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
+        .counter-btn:active {
+            transform: scale(0.95);
         }
 
-        /* Floating Cart */
+        .counter-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Setas Laterais Arredondadas */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(13, 15, 14, 0.85);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .carousel-arrow.left { left: -21px; }
+        .carousel-arrow.right { right: -21px; }
+
+        /* Carrinho Flutuante */
         .floating-cart {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 25px;
+            right: 25px;
             background: var(--gold-gradient);
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            z-index: 100;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            z-index: 999;
+            font-size: 24px;
         }
 
         .cart-badge-count {
             position: absolute;
-            top: -2px;
-            right: -2px;
+            top: 2px;
+            right: 2px;
             background: #ff3b30;
             color: #fff;
             font-size: 11px;
@@ -301,73 +275,66 @@
         </div>
     </header>
 
-    <div class="main-title-container">
-        <h1>Monte sua Assinatura Personalizada</h1>
-        <p class="subtitle">Escolha o plano ideal e adicione as marmitas no carrossel. Seu pedido ficará salvo no carrinho suspenso.</p>
-    </div>
+    <div class="carousel-container">
+        <button class="carousel-arrow left">&lt;</button>
+        <button class="carousel-arrow right">&gt;</button>
 
-    <div class="section-header">
-        <span>🛡️</span> 1. Selecione o seu Plano
-    </div>
-
-    <div class="plans-grid">
-        <!-- Plano Fitness -->
-        <div class="plan-card active-border">
-            <div class="plan-header">
-                <div class="plan-title">Plano Fitness</div>
-                <div class="plan-badge">Mais Popular</div>
-            </div>
-            <p class="plan-desc">Proteínas magras e vegetais balanceados para sua rotina saudável.</p>
-            
-            <div class="plan-options">
-                <div class="option-box selected" onclick="selectOption(this)">
-                    <div class="opt-name">Semanal (5 un.)</div>
-                    <div class="opt-price">R$ 125,00</div>
+        <div class="dishes-grid">
+            <!-- Prato 1 -->
+            <div class="dish-card">
+                <div>
+                    <div class="dish-img-container">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Frango Grelhado">
+                    </div>
+                    <div class="dish-tag">Fitness</div>
+                    <div class="dish-name">Frango Grelhado & Brócolis</div>
+                    <div class="dish-desc">Peito de frango temperado com ervas, arroz integral e brócolis ao alho.</div>
                 </div>
-                <div class="option-box" onclick="selectOption(this)">
-                    <div class="opt-name">Mensal (20 un.)</div>
-                    <div class="opt-price">R$ 450,00</div>
+                <div class="dish-counter">
+                    <button class="counter-btn" onclick="updateCount(this, -1)">-</button>
+                    <span class="counter-value">0</span>
+                    <button class="counter-btn" onclick="updateCount(this, 1)">+</button>
                 </div>
             </div>
 
-            <div class="plan-footer">
-                <span class="plan-qty-label">Qtd. de Planos:</span>
-                <div class="qty-control">
-                    <button class="qty-btn" onclick="adjustQty(this, -1)">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+            <!-- Prato 2 -->
+            <div class="dish-card">
+                <div>
+                    <div class="dish-img-container">
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999" alt="Patinho Moído">
+                    </div>
+                    <div class="dish-tag">Fitness</div>
+                    <div class="dish-name">Patinho Moído Low Carb</div>
+                    <div class="dish-desc">Carne magra bovina refogada, purê de batata-doce e vagem no vapor.</div>
+                </div>
+                <div class="dish-counter">
+                    <button class="counter-btn" onclick="updateCount(this, -1)">-</button>
+                    <span class="counter-value">0</span>
+                    <button class="counter-btn" onclick="updateCount(this, 1)">+</button>
+                </div>
+            </div>
+
+            <!-- Prato 3 -->
+            <div class="dish-card">
+                <div>
+                    <div class="dish-img-container">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Frango Desfiado">
+                    </div>
+                    <div class="dish-tag">Fitness</div>
+                    <div class="dish-name">Frango Desfiado com Abóbora</div>
+                    <div class="dish-desc">Frango desfiado leve com purê de cabotiá e mix de legumes grelhados.</div>
+                </div>
+                <div class="dish-counter">
+                    <button class="counter-btn" onclick="updateCount(this, -1)">-</button>
+                    <span class="counter-value">0</span>
+                    <button class="counter-btn" onclick="updateCount(this, 1)">+</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Plano Alpha -->
-        <div class="plan-card">
-            <div class="plan-header">
-                <div class="plan-title">Plano Alpha</div>
-                <div class="plan-badge" style="background:#232a26; color:var(--primary-gold); border: 1px solid var(--primary-gold);">Dia a Dia</div>
-            </div>
-            <p class="plan-desc">Pratos caseiros completos, sabor equilibrado e nutrição diária.</p>
-            
-            <div class="plan-options">
-                <div class="option-box selected" onclick="selectOption(this)">
-                    <div class="opt-name">Semanal (5 un.)</div>
-                    <div class="opt-price">R$ 150,00</div>
-                </div>
-                <div class="option-box" onclick="selectOption(this)">
-                    <div class="opt-name">Mensal (20 un.)</div>
-                    <div class="opt-price">R$ 500,00</div>
-                </div>
-            </div>
-
-            <div class="plan-footer">
-                <span class="plan-qty-label">Qtd. de Planos:</span>
-                <div class="qty-control">
-                    <button class="qty-btn" onclick="adjustQty(this, -1)">-</button>
-                    <span class="qty-value">1</span>
-                    <button class="qty-btn" onclick="adjustQty(this, 1)">+</button>
-                </div>
-            </div>
-        </div>
+    <div class="section-title">
+        <span>👤</span> 3. Dados para Entrega e Cadastro
     </div>
 
     <!-- Carrinho Flutuante -->
@@ -377,17 +344,11 @@
     </div>
 
     <script>
-        function selectOption(element) {
-            const parent = element.parentElement;
-            parent.querySelectorAll('.option-box').forEach(box => box.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-
-        function adjustQty(button, change) {
-            const valueSpan = button.parentElement.querySelector('.qty-value');
+        function updateCount(button, change) {
+            const valueSpan = button.parentElement.querySelector('.counter-value');
             let currentVal = parseInt(valueSpan.innerText);
             currentVal += change;
-            if (currentVal < 1) currentVal = 1;
+            if (currentVal < 0) currentVal = 0;
             valueSpan.innerText = currentVal;
         }
     </script>
