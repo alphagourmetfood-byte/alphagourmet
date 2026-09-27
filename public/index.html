@@ -3,924 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Gourmet | Cardápio e Assinatura de Marmitas</title>
-    <!-- Google Fonts: Cinzel & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome para Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Alpha Gourmet - Monte sua Assinatura Personalizada</title>
     <style>
         :root {
-            --primary: #c5a059;
-            --primary-dark: #a3813c;
-            --dark: #121212;
-            --dark-card: #1e1e1e;
-            --gray: #2c2c2c;
-            --text-light: #f5f5f5;
-            --text-muted: #aaaaaa;
-            --success: #28a745;
-            --danger: #dc3545;
-            --transition: all 0.3s ease;
+            --bg-color: #0d0f0e;
+            --card-bg: #161a18;
+            --card-border: #232a26;
+            --primary-gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #aa8c2c 100%);
+            --text-main: #ffffff;
+            --text-muted: #a0a8a3;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--dark);
-            color: var(--text-light);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        h1, h2, h3, .brand-font {
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-        }
-
-        /* CABEÇALHO */
         header {
-            background: rgba(18, 18, 18, 0.95);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
+            max-width: 1100px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 40px;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .nav-right {
+        .logo-area {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 12px;
         }
 
-        .whatsapp-icon-link {
-            color: #25d366;
-            font-size: 1.8rem;
-            transition: var(--transition);
-        }
-
-        .whatsapp-icon-link:hover {
-            transform: scale(1.1);
-        }
-
-        .btn-admin {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-
-        .btn-admin:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        /* CONTEÚDO PRINCIPAL */
-        main {
-            max-width: 1200px;
-            margin: 100px auto 50px auto;
-            padding: 0 2rem;
-        }
-
-        .hero-section {
+        .logo-badge {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--primary-gold);
+            font-weight: bold;
             text-align: center;
-            padding: 3rem 0;
+            background: #111;
         }
 
-        .hero-section h1 {
-            font-size: 2.8rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .brand-name {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-main);
         }
 
-        .hero-section p {
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #1b2621;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .icon-btn.whatsapp {
+            background-color: #25d366;
+        }
+
+        .main-title-container {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        h1 {
+            font-size: 26px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
+            font-size: 14px;
         }
 
-        /* SEÇÃO DE PLANOS */
-        .section-title {
-            font-size: 2rem;
-            margin: 2rem 0 1.5rem 0;
-            border-bottom: 2px solid var(--gray);
-            padding-bottom: 0.5rem;
-            color: var(--primary);
+        .section-header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            color: var(--primary-gold);
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .plans-grid {
+            width: 100%;
+            max-width: 1100px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         .plan-card {
-            background: var(--dark-card);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            border-radius: 8px;
-            padding: 2rem;
+            background-color: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card.active-border {
+            border-color: var(--primary-gold);
+        }
+
+        .plan-header {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            transition: var(--transition);
+            align-items: flex-start;
+            margin-bottom: 12px;
         }
 
-        .plan-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .plan-header h3 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .plan-price {
-            font-size: 1.8rem;
+        .plan-title {
+            font-size: 20px;
             font-weight: 700;
-            margin: 1rem 0;
-            color: #fff;
+            text-transform: uppercase;
         }
 
-        .plan-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
-            color: var(--text-muted);
-        }
-
-        .plan-features li {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .plan-features li i {
-            color: var(--primary);
-        }
-
-        /* MULTIPLICADOR DE QUANTIDADE NOS PLANOS */
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--gray);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-        }
-
-        .quantity-control button {
-            background: var(--primary);
-            color: var(--dark);
-            border: none;
-            width: 30px;
-            height: 30px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .quantity-control button:hover {
-            background: var(--primary-dark);
-        }
-
-        .quantity-control span {
+        .plan-badge {
+            background-color: var(--primary-gold);
+            color: #000;
+            font-size: 11px;
             font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--dark);
-            border: none;
-            padding: 0.8rem;
-            font-weight: 700;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
-        /* CARROSSEL DE REFEIÇÕES FILTRADAS */
-        .filter-container {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-        }
-
-        .filter-btn {
-            background: var(--dark-card);
-            border: 1px solid var(--gray);
-            color: var(--text-light);
-            padding: 0.6rem 1.2rem;
+            padding: 4px 10px;
             border-radius: 20px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: var(--transition);
+            text-transform: uppercase;
         }
 
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--primary);
-            color: var(--dark);
-            border-color: var(--primary);
+        .plan-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .plan-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option-box {
+            background: #111513;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-box.selected {
+            background: var(--gold-gradient);
+            color: #000;
+            border-color: transparent;
             font-weight: 600;
         }
 
-        .meals-carousel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+        .option-box.selected .opt-price {
+            color: #000;
         }
 
-        .meal-card {
-            background: var(--dark-card);
+        .opt-name {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .opt-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-gold);
+        }
+
+        .plan-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--card-border);
+            padding-top: 20px;
+        }
+
+        .plan-qty-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            background: #111513;
+            border: 1px solid var(--card-border);
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: var(--transition);
         }
 
-        .meal-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
+        .qty-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        .meal-info {
-            padding: 1.2rem;
-        }
-
-        .meal-info h4 {
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .meal-info p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* FORMULÁRIO DE CADASTRO DE CLIENTE & ENDEREÇO */
-        .checkout-section {
-            background: var(--dark-card);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-group label {
-            font-size: 0.9rem;
-            color: var(--primary);
+        .qty-value {
+            width: 35px;
+            text-align: center;
             font-weight: 600;
+            font-size: 14px;
         }
 
-        .form-group input {
-            background: var(--gray);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.8rem;
-            border-radius: 4px;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        /* ACOMPANHAMENTO DE PEDIDOS */
-        .tracking-box {
-            background: var(--dark-card);
-            border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .tracking-input-group {
-            display: flex;
-            max-width: 450px;
-            margin: 1.5rem auto 0 auto;
-            gap: 0.5rem;
-        }
-
-        .tracking-input-group input {
-            flex: 1;
-            background: var(--gray);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.8rem;
-            border-radius: 4px;
-            color: white;
-        }
-
-        /* PAINEL ADMIN (MODAL / SEÇÃO) */
-        .modal {
-            display: none;
+        /* Floating Cart */
+        .floating-cart {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
+            bottom: 30px;
+            right: 30px;
+            background: var(--gold-gradient);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            padding: 1rem;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            z-index: 100;
         }
 
-        .modal-content {
-            background: var(--dark-card);
-            border: 1px solid var(--primary);
-            width: 100%;
-            max-width: 900px;
-            max-height: 90vh;
-            border-radius: 8px;
-            overflow-y: auto;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .close-modal {
+        .cart-badge-count {
             position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 1.8rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--primary);
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .admin-table th, .admin-table td {
-            padding: 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .admin-table th {
-            color: var(--primary);
-            font-family: 'Cinzel', serif;
-        }
-
-        .status-select {
-            background: var(--gray);
-            color: white;
-            border: 1px solid var(--primary);
-            padding: 0.4rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        /* RODAPÉ E PWA */
-        footer {
-            background: #0d0d0d;
-            border-top: 1px solid var(--gray);
-            padding: 3rem 2rem 1.5rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            top: -2px;
+            right: -2px;
+            background: #ff3b30;
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .social-links a {
-            color: var(--primary);
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            transform: scale(1.1);
-        }
-
-        .pwa-badges {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
             justify-content: center;
-        }
-
-        .pwa-btn {
-            background: var(--gray);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .pwa-btn:hover {
-            border-color: var(--primary);
-            background: rgba(197, 160, 89, 0.1);
-        }
-
-        .copyright {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            width: 100%;
-            padding-top: 1.5rem;
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 768px) {
-            .hero-section h1 { font-size: 2.2rem; }
-            .nav-container { padding: 1rem; }
+            border: 2px solid var(--bg-color);
         }
     </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO -->
     <header>
-        <div class="nav-container">
-            <a href="#" class="logo brand-font">ALPHA GOURMET</a>
-            <div class="nav-right">
-                <!-- Apenas Ícone Oficial do WhatsApp linkando para wa.me -->
-                <a href="https://wa.me/5585981714760?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20as%20marmitas%20Alpha%20Gourmet." target="_blank" class="whatsapp-icon-link" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <button class="btn-admin" onclick="openAdminModal()"><i class="fas fa-lock"></i> Painel Admin</button>
-            </div>
+        <div class="logo-area">
+            <div class="logo-badge">ALPHA</div>
+            <div class="brand-name">ALPHA GOURMET</div>
+        </div>
+        <div class="header-icons">
+            <button class="icon-btn whatsapp">💬</button>
+            <button class="icon-btn">☰</button>
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main>
-        <section class="hero-section">
-            <h1 class="brand-font">Alta Gastronomia & Fitness</h1>
-            <p>Nutrição de alto desempenho, sabor incomparável e praticidade entregues diretamente na sua porta. Escolha seu plano e monte suas refeições.</p>
-        </section>
+    <div class="main-title-container">
+        <h1>Monte sua Assinatura Personalizada</h1>
+        <p class="subtitle">Escolha o plano ideal e adicione as marmitas no carrossel. Seu pedido ficará salvo no carrinho suspenso.</p>
+    </div>
 
-        <!-- SEÇÃO DE PLANOS COM MULTIPLICADOR EM TODOS -->
-        <h2 class="section-title brand-font">Nossos Planos de Assinatura</h2>
-        <div class="plans-grid">
-            <!-- Plano Fitness -->
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3 class="brand-font">Plano Fitness</h3>
-                    <div class="plan-price" id="price-fitness">R$ 120,00</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Baixo teor calórico</li>
-                    <li><i class="fas fa-check"></i> Proteínas selecionadas</li>
-                    <li><i class="fas fa-check"></i> 5 Marmitas por ciclo</li>
-                </ul>
-                <div>
-                    <div class="quantity-control">
-                        <span>Quantidade:</span>
-                        <div>
-                            <button onclick="updatePlanQty('fitness', -1)">-</button>
-                            <span id="qty-fitness" style="margin: 0 10px;">1</span>
-                            <button onclick="updatePlanQty('fitness', 1)">+</button>
-                        </div>
-                    </div>
-                    <button class="btn-primary" onclick="selectPlan('Plano Fitness', 120, 'qty-fitness')">Assinar Plano</button>
-                </div>
+    <div class="section-header">
+        <span>🛡️</span> 1. Selecione o seu Plano
+    </div>
+
+    <div class="plans-grid">
+        <!-- Plano Fitness -->
+        <div class="plan-card active-border">
+            <div class="plan-header">
+                <div class="plan-title">Plano Fitness</div>
+                <div class="plan-badge">Mais Popular</div>
             </div>
-
-            <!-- Plano Alpha (Substituto do Executivo) -->
-            <div class="plan-card" style="border-color: var(--primary);">
-                <div class="plan-header">
-                    <h3 class="brand-font">Plano Alpha</h3>
-                    <div class="plan-price" id="price-alpha">R$ 150,00</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Pratos executivos gourmet</li>
-                    <li><i class="fas fa-check"></i> Ingredientes premium importados</li>
-                    <li><i class="fas fa-check"></i> 5 Marmitas por ciclo</li>
-                </ul>
-                <div>
-                    <div class="quantity-control">
-                        <span>Quantidade:</span>
-                        <div>
-                            <button onclick="updatePlanQty('alpha', -1)">-</button>
-                            <span id="qty-alpha" style="margin: 0 10px;">1</span>
-                            <button onclick="updatePlanQty('alpha', 1)">+</button>
-                        </div>
-                    </div>
-                    <button class="btn-primary" onclick="selectPlan('Plano Alpha', 150, 'qty-alpha')">Assinar Plano</button>
-                </div>
-            </div>
-
-            <!-- Plano Prime -->
-            <div class="plan-card">
-                <div class="plan-header">
-                    <h3 class="brand-font">Plano Prime</h3>
-                    <div class="plan-price" id="price-prime">R$ 220,00</div>
-                </div>
-                <ul class="plan-features">
-                    <li><i class="fas fa-check"></i> Cardápio livre e exclusivo</li>
-                    <li><i class="fas fa-check"></i> Porções duplas e cortes nobres</li>
-                    <li><i class="fas fa-check"></i> 7 Marmitas por ciclo</li>
-                </ul>
-                <div>
-                    <div class="quantity-control">
-                        <span>Quantidade:</span>
-                        <div>
-                            <button onclick="updatePlanQty('prime', -1)">-</button>
-                            <span id="qty-prime" style="margin: 0 10px;">1</span>
-                            <button onclick="updatePlanQty('prime', 1)">+</button>
-                        </div>
-                    </div>
-                    <button class="btn-primary" onclick="selectPlan('Plano Prime', 220, 'qty-prime')">Assinar Plano</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARROSSEL DE REFEIÇÕES FILTRADAS -->
-        <h2 class="section-title brand-font">Escolha Suas Refeições</h2>
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterMeals('todos', event)">Todos</button>
-            <button class="filter-btn" onclick="filterMeals('fitness', event)">Fitness</button>
-            <button class="filter-btn" onclick="filterMeals('alpha', event)">Alpha Gourmet</button>
-            <button class="filter-btn" onclick="filterMeals('lowcarb', event)">Low Carb</button>
-        </div>
-
-        <div class="meals-carousel" id="mealsContainer">
-            <!-- Renderizado via JS -->
-        </div>
-
-        <!-- CADASTRO DE CLIENTE & ENDEREÇO COMPLETO -->
-        <section class="checkout-section">
-            <h2 class="brand-font" style="color: var(--primary); margin-bottom: 1rem;">Dados de Entrega & Cliente</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Preencha seus dados para vincular perfeitamente o seu pedido e agilizar a entrega.</p>
+            <p class="plan-desc">Proteínas magras e vegetais balanceados para sua rotina saudável.</p>
             
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" id="clientName" placeholder="Ex: Márcio Adriano Silva">
+            <div class="plan-options">
+                <div class="option-box selected" onclick="selectOption(this)">
+                    <div class="opt-name">Semanal (5 un.)</div>
+                    <div class="opt-price">R$ 125,00</div>
                 </div>
-                <div class="form-group">
-                    <label>Telefone / WhatsApp</label>
-                    <input type="text" id="clientPhone" placeholder="(85) 98171-4760">
-                </div>
-                <div class="form-group" style="grid-column: span 2;">
-                    <label>Endereço Completo (Rua, Número, Complemento)</label>
-                    <input type="text" id="clientAddress" placeholder="Ex: Av. Beira Mar, 1000 - Apto 502">
-                </div>
-                <div class="form-group">
-                    <label>Cidade</label>
-                    <input type="text" id="clientCity" value="Fortaleza - CE">
-                </div>
-                <div class="form-group">
-                    <label>CEP</label>
-                    <input type="text" id="clientCep" placeholder="60.000-000">
+                <div class="option-box" onclick="selectOption(this)">
+                    <div class="opt-name">Mensal (20 un.)</div>
+                    <div class="opt-price">R$ 450,00</div>
                 </div>
             </div>
-            <button class="btn-primary" style="margin-top: 2rem; padding: 1rem; font-size: 1.1rem;" onclick="finalizeOrder()">Finalizar Pedido com os Dados Acima</button>
-        </section>
 
-        <!-- ACOMPANHAMENTO DE PEDIDOS -->
-        <section class="tracking-box">
-            <h2 class="brand-font" style="color: var(--primary);">Acompanhe seu Pedido</h2>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Digite o código identificador gerado no seu pedido (Ex: #ALP-1001)</p>
-            <div class="tracking-input-group">
-                <input type="text" id="trackingCodeInput" placeholder="#ALP-1001">
-                <button class="btn-primary" style="width: auto; padding: 0 1.5rem;" onclick="trackOrder()">Buscar</button>
+            <div class="plan-footer">
+                <span class="plan-qty-label">Qtd. de Planos:</span>
+                <div class="qty-control">
+                    <button class="qty-btn" onclick="adjustQty(this, -1)">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+                </div>
             </div>
-            <div id="trackingResult" style="margin-top: 1rem; font-weight: 600;"></div>
-        </section>
-    </main>
+        </div>
 
-    <!-- MODAL DO PAINEL DO ADMINISTRADOR -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
-            <h2 class="brand-font" style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-shield-alt"></i> Painel do Administrador</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Gerenciamento de pedidos em tempo real para a operação World Tour & WST Travell.</p>
+        <!-- Plano Alpha -->
+        <div class="plan-card">
+            <div class="plan-header">
+                <div class="plan-title">Plano Alpha</div>
+                <div class="plan-badge" style="background:#232a26; color:var(--primary-gold); border: 1px solid var(--primary-gold);">Dia a Dia</div>
+            </div>
+            <p class="plan-desc">Pratos caseiros completos, sabor equilibrado e nutrição diária.</p>
             
-            <div style="overflow-x: auto;">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Pedido</th>
-                            <th>Cliente</th>
-                            <th>Plano / Meta</th>
-                            <th>Endereço</th>
-                            <th>Status Atual</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminOrdersTable">
-                        <!-- Preenchido dinamicamente -->
-                    </tbody>
-                </table>
+            <div class="plan-options">
+                <div class="option-box selected" onclick="selectOption(this)">
+                    <div class="opt-name">Semanal (5 un.)</div>
+                    <div class="opt-price">R$ 150,00</div>
+                </div>
+                <div class="option-box" onclick="selectOption(this)">
+                    <div class="opt-name">Mensal (20 un.)</div>
+                    <div class="opt-price">R$ 500,00</div>
+                </div>
+            </div>
+
+            <div class="plan-footer">
+                <span class="plan-qty-label">Qtd. de Planos:</span>
+                <div class="qty-control">
+                    <button class="qty-btn" onclick="adjustQty(this, -1)">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn" onclick="adjustQty(this, 1)">+</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- RODAPÉ, REDES E PWA -->
-    <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <!-- Link oficial para o Instagram no rodapé -->
-                <a href="https://instagram.com/worldtour.oficial" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/5585981714760" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            </div>
+    <!-- Carrinho Flutuante -->
+    <div class="floating-cart">
+        🛒
+        <div class="cart-badge-count">1</div>
+    </div>
 
-            <!-- Botões visuais para download PWA / App -->
-            <div class="pwa-badges">
-                <button class="pwa-btn" onclick="alert('Instalando Web App Android (PWA)...')">
-                    <i class="fab fa-android fa-lg" style="color: #3ddc84;"></i> Baixar App Android
-                </button>
-                <button class="pwa-btn" onclick="alert('Instalando Web App iOS (PWA)...')">
-                    <i class="fab fa-apple fa-lg"></i> Instalar no iOS
-                </button>
-            </div>
-
-            <div class="copyright">
-                &copy; 2026 Alpha Gourmet &mdash; World Tour / WST Travell. Todos os direitos reservados.
-            </div>
-        </div>
-    </footer>
-
-    <!-- SCRIPT DA APLICAÇÃO -->
     <script>
-        // Estado Global da Aplicação
-        const state = {
-            planQuantities: {
-                fitness: 1,
-                alpha: 1,
-                prime: 1
-            },
-            selectedPlanInfo: {
-                name: 'Nenhum selecionado',
-                price: 0,
-                totalMeals: 0
-            },
-            orders: [
-                { id: '#ALP-1001', name: 'Ana Paula Souza', plan: 'Plano Alpha (10 marmitas)', address: 'Av. Beira Mar, 500 - Fortaleza', status: 'Pedido Recebido' },
-                { id: '#ALP-1002', name: 'Carlos Eduardo', plan: 'Plano Fitness (5 marmitas)', address: 'Rua Desembargador Moreira, 200 - Fortaleza', status: 'Em Preparação' }
-            ]
-        };
-
-        // Banco de Dados de Refeições
-        const mealsDatabase = [
-            { id: 1, category: 'fitness', name: 'Frango Grelhado com Ervas Finas', desc: 'Acompanha purê de batata-doce e brócolis ao vapor.', img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=60' },
-            { id: 2, category: 'fitness', name: 'Tilápia ao Molho de Limão Siciliano', desc: 'Arroz integral com castanhas e mix de legumes.', img: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&auto=format&fit=crop&q=60' },
-            { id: 3, category: 'alpha', name: 'Medalhão de Filé Mignon ao Molho Madeira', desc: 'Acompanha risoto de alho-poró artesanal.', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=60' },
-            { id: 4, category: 'alpha', name: 'Salmão Grelhado com Crosta de Gergelim', desc: 'Molho teriyaki artesanal e legumes salteados na manteiga.', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&auto=format&fit=crop&q=60' },
-            { id: 5, category: 'lowcarb', name: 'Escondidinho de Abóbora com Carne Moída', desc: 'Carne bovina selecionada e purê de abóbora rústico.', img: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=400&auto=format&fit=crop&q=60' },
-            { id: 6, category: 'lowcarb', name: 'Frango com Catupiry Fit e Abobrinha', desc: 'Creme de ricota light e espaguete de abobrinha.', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&auto=format&fit=crop&q=60' }
-        ];
-
-        // Atualizador de Quantidade nos Planos com cálculo dinâmico de meta de marmitas
-        function updatePlanQty(planKey, change) {
-            let current = state.planQuantities[planKey] + change;
-            if (current < 1) current = 1;
-            state.planQuantities[planKey] = current;
-            document.getElementById(`qty-${planKey}`).innerText = current;
-
-            // Recálculo visual dinâmico do preço e meta de marmitas
-            let basePrice = planKey === 'fitness' ? 120 : (planKey === 'alpha' ? 150 : 220);
-            let baseMeals = planKey === 'prime' ? 7 : 5;
-            
-            let calculatedPrice = basePrice * current;
-            let calculatedMeals = baseMeals * current;
-
-            document.getElementById(`price-${planKey}`).innerText = `R$ ${calculatedPrice.toFixed(2).replace('.', ',')}`;
+        function selectOption(element) {
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option-box').forEach(box => box.classList.remove('selected'));
+            element.classList.add('selected');
         }
 
-        // Seleção de Plano
-        function selectPlan(planName, unitPrice, qtyElementId) {
-            const qty = parseInt(document.getElementById(qtyElementId).innerText);
-            const totalPrice = unitPrice * qty;
-            const totalMeals = (planName.includes('Prime') ? 7 : 5) * qty;
-
-            state.selectedPlanInfo = {
-                name: `${planName} (${qty}x - ${totalMeals} marmitas)`,
-                price: totalPrice,
-                totalMeals: totalMeals
-            };
-
-            alert(`Plano selecionado com sucesso!\n\n${state.selectedPlanInfo.name}\nTotal: R$ ${totalPrice.toFixed(2).replace('.', ',')}\n\nPreencha os dados de entrega abaixo para concluir o pedido.`);
-            window.scrollTo({ top: document.querySelector('.checkout-section').offsetTop - 80, behavior: 'smooth' });
+        function adjustQty(button, change) {
+            const valueSpan = button.parentElement.querySelector('.qty-value');
+            let currentVal = parseInt(valueSpan.innerText);
+            currentVal += change;
+            if (currentVal < 1) currentVal = 1;
+            valueSpan.innerText = currentVal;
         }
-
-        // Renderização do Carrossel / Grade de Refeições
-        function renderMeals(filter = 'todos') {
-            const container = document.getElementById('mealsContainer');
-            container.innerHTML = '';
-
-            const filtered = filter === 'todos' ? mealsDatabase : mealsDatabase.filter(m => m.category === filter);
-
-            filtered.forEach(meal => {
-                const card = document.createElement('div');
-                card.className = 'meal-card';
-                card.innerHTML = `
-                    <img src="${meal.img}" alt="${meal.name}" class="meal-img">
-                    <div class="meal-info">
-                        <h4 class="brand-font">${meal.name}</h4>
-                        <p>${meal.desc}</p>
-                        <span style="font-size: 0.8rem; color: var(--primary); font-weight: 600; text-transform: uppercase;">Categoria: ${meal.category}</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function filterMeals(category, event) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            renderMeals(category);
-        }
-
-        // Finalização do Pedido com geração automática de ID (#ALP-XXXX)
-        function finalizeOrder() {
-            const name = document.getElementById('clientName').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const address = document.getElementById('clientAddress').value.trim();
-            const city = document.getElementById('clientCity').value.trim();
-            const cep = document.getElementById('clientCep').value.trim();
-
-            if (!name || !phone || !address || !cep) {
-                alert('Por favor, preencha todos os campos obrigatórios de cadastro e endereço.');
-                return;
-            }
-
-            if (state.selectedPlanInfo.price === 0) {
-                alert('Por favor, selecione um plano de assinatura acima antes de finalizar.');
-                return;
-            }
-
-            const randomId = `#ALP-${Math.floor(1000 + Math.random() * 9000)}`;
-
-            const newOrder = {
-                id: randomId,
-                name: name,
-                plan: state.selectedPlanInfo.name,
-                address: `${address}, ${city} - CEP: ${cep}`,
-                status: 'Pedido Recebido'
-            };
-
-            state.orders.unshift(newOrder);
-
-            alert(`Pedido finalizado com sucesso!\n\nSeu Número Identificador: ${randomId}\n\nGuarde este número para acompanhar o status do seu pedido.`);
-            
-            // Limpa formulário
-            document.getElementById('clientName').value = '';
-            document.getElementById('clientPhone').value = '';
-            document.getElementById('clientAddress').value = '';
-            document.getElementById('clientCep').value = '';
-
-            // Atualiza painel admin se aberto
-            updateAdminTable();
-        }
-
-        // Acompanhamento de Pedido pelo Cliente
-        function trackOrder() {
-            const code = document.getElementById('trackingCodeInput').value.trim();
-            const resultDiv = document.getElementById('trackingResult');
-
-            if (!code) {
-                resultDiv.style.color = 'var(--danger)';
-                resultDiv.innerText = 'Digite um código válido.';
-                return;
-            }
-
-            const found = state.orders.find(o => o.id.toLowerCase() === code.toLowerCase());
-
-            if (found) {
-                resultDiv.style.color = 'var(--primary)';
-                resultDiv.innerHTML = `Status do Pedido <span style="color:white">${found.id}</span>: <b style="color:var(--success);">${found.status}</b> (${found.plan})`;
-            } else {
-                resultDiv.style.color = 'var(--danger)';
-                resultDiv.innerText = 'Pedido não encontrado. Verifique o código e tente novamente.';
-            }
-        }
-
-        // Painel do Administrador
-        function openAdminModal() {
-            updateAdminTable();
-            document.getElementById('adminModal').style.display = 'flex';
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-        }
-
-        function updateAdminTable() {
-            const tbody = document.getElementById('adminOrdersTable');
-            tbody.innerHTML = '';
-
-            state.orders.forEach((order, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="font-weight: 700; color: var(--primary);">${order.id}</td>
-                    <td>${order.name}</td>
-                    <td>${order.plan}</td>
-                    <td>${order.address}</td>
-                    <td>
-                        <select class="status-select" onchange="updateOrderStatus(${index}, this.value)">
-                            <option value="Pedido Recebido" ${order.status === 'Pedido Recebido' ? 'selected' : ''}>Pedido Recebido</option>
-                            <option value="Em Preparação" ${order.status === 'Em Preparação' ? 'selected' : ''}>Em Preparação</option>
-                            <option value="Em Andamento" ${order.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
-                            <option value="Saiu para Entrega" ${order.status === 'Saiu para Entrega' ? 'selected' : ''}>Saiu para Entrega</option>
-                        </select>
-                    </td>
-                    <td><button style="background:var(--danger); color:white; border:none; padding:0.3rem 0.6rem; border-radius:4px; cursor:pointer;" onclick="deleteOrder(${index})"><i class="fas fa-trash"></i></button></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateOrderStatus(index, newStatus) {
-            state.orders[index].status = newStatus;
-        }
-
-        function deleteOrder(index) {
-            if (confirm('Deseja realmente excluir este pedido do painel?')) {
-                state.orders.splice(index, 1);
-                updateAdminTable();
-            }
-        }
-
-        // Inicialização
-        window.onload = function() {
-            renderMeals('todos');
-        };
     </script>
 </body>
 </html>
