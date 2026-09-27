@@ -1,9 +1,0 @@
-{
-  "name": "alpha-gourmet",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Alpha Gourmet — Alta Gastronomia & Nutrição",
-  "scripts": {
-    "build": "echo 'Build estatico concluido com sucesso'"
-  }
-}
