@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALPHA GOURMET — Alta Gastronomia & Nutrição</title>
+  
+  <!-- Fontes Elegantes: Cinzel para a marca e Plus Jakarta Sans para o sistema -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+  <style>
+    :root {
+      --bg-dark: #090a0f;
+      --bg-card: #12141d;
+      --gold-primary: #e5c158;
+      --gold-glow: rgba(229, 193, 88, 0.25);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(229, 193, 88, 0.18);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 120px; overflow-x: hidden; }
+
+    /* Header Navegação */
+    .app-header {
+      background: rgba(9, 10, 15, 0.88);
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky; top: 0; z-index: 200;
+      backdrop-filter: blur(12px);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .brand-logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+    .brand-logo-img {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 2px solid var(--gold-primary); object-fit: cover;
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+    
+    /* Fonte Elegante Cinzel para a Marca */
+    .brand-title { font-family: 'Cinzel', serif; font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
+    .brand-title span { color: var(--gold-primary); }
+
+    .header-actions { display: flex; align-items: center; gap: 14px; }
+
+    /* WhatsApp Minimalista (Somente Logo) */
+    .btn-whatsapp-icon {
+      background: #25d366; color: #fff; text-decoration: none;
+      width: 42px; height: 42px; border-radius: 50%; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35); transition: transform 0.2s;
+    }
+    .btn-whatsapp-icon:hover { transform: scale(1.08); }
+
+    .hamburger-btn { background: transparent; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; padding: 4px; }
+
+    /* Nav Drawer */
+    .nav-drawer {
+      position: fixed; top: 0; right: -100%; width: 290px; height: 100vh;
+      background: var(--bg-card); border-left: 1px solid var(--border-color);
+      z-index: 300; padding: 30px 20px; transition: right 0.3s ease;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .nav-drawer.active { right: 0; }
+    .close-drawer { align-self: flex-end; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
+    .nav-drawer a {
+      color: var(--text-main); text-decoration: none; font-weight: 600;
+      font-size: 1rem; display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      padding: 35px 20px 15px; text-align: center; max-width: 800px; margin: 0 auto;
+      background: radial-gradient(circle at center, rgba(229, 193, 88, 0.12) 0%, rgba(9, 10, 15, 0) 70%);
+    }
+    .hero-tag {
+      background: rgba(229, 193, 88, 0.12); color: var(--gold-primary);
+      padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 12px;
+    }
+    .hero-banner h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 800; letter-spacing: 0.5px; }
+    .hero-banner p { color: var(--text-muted); font-size: 0.9rem; margin-top: 8px; }
+
+    /* Sections */
+    .section-block { max-width: 1100px; margin: 0 auto; padding: 25px 20px; }
+    .section-title {
+      font-size: 1.15rem; font-weight: 800; color: var(--gold-primary);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px; text-transform: uppercase;
+    }
+
+    /* Grid de Planos */
+    .planos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+
+    .card-plano-select {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg); padding: 20px; cursor: pointer; transition: all 0.25s ease;
+    }
+    .card-plano-select:hover { border-color: var(--gold-primary); }
+    .card-plano-select.selected {
+      border-color: var(--gold-primary); box-shadow: 0 0 25px var(--gold-glow);
+      background: linear-gradient(180deg, rgba(229, 193, 88, 0.08) 0%, var(--bg-card) 100%);
+    }
+
+    .plano-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .plano-nome { font-size: 1.2rem; font-weight: 800; font-family: 'Cinzel', serif; }
+    .plano-badge { background: var(--gold-primary); color: #000; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
+    .plano-desc-text { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; min-height: 36px; }
+
+    .periodo-buttons { display: flex; gap: 10px; }
+    .btn-periodo {
+      flex: 1; padding: 10px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03);
+      color: var(--text-main); border-radius: var(--radius-md); font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; text-align: center;
+    }
+    .btn-periodo.active { background: var(--gold-primary); color: #000; border-color: var(--gold-primary); }
+
+    /* Multiplicador em Todos os Planos */
+    .plan-quantity-control {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .plan-quantity-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); }
+    .qty-btn-group { display: flex; align-items: center; gap: 10px; }
+    .btn-qty-plan {
+      background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--border-color);
+      width: 28px; height: 28px; border-radius: 6px; font-weight: 800; cursor: pointer;
+    }
+
+    /* Carrossel de Refeições */
+    .carousel-wrapper { position: relative; width: 100%; }
+    .carousel-container {
+      display: flex; gap: 18px; overflow-x: auto; padding: 10px 4px 20px;
+      scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;
+    }
+    .carousel-container::-webkit-scrollbar { display: none; }
+
+    .carousel-nav-btn {
+      position: absolute; top: 45%; transform: translateY(-50%);
+      width: 42px; height: 42px; border-radius: 50%; background: rgba(9, 10, 15, 0.9);
+      border: 1px solid var(--gold-primary); color: var(--gold-primary);
+      display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10;
+    }
+    .carousel-nav-btn.prev { left: -12px; }
+    .carousel-nav-btn.next { right: -12px; }
+
+    .card-marmita-carousel {
+      flex: 0 0 270px; scroll-snap-align: start;
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg); padding: 14px; display: flex; flex-direction: column;
+      justify-content: space-between; transition: border-color 0.2s;
+    }
+    .card-marmita-carousel:hover { border-color: var(--gold-primary); }
+    .marmita-img { width: 100%; height: 160px; border-radius: var(--radius-md); object-fit: cover; margin-bottom: 12px; }
+    .marmita-categoria { font-size: 0.7rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; margin-bottom: 4px; }
+    .marmita-titulo { font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px; }
+    .marmita-detalhes { font-size: 0.8rem; color: var(--text-muted); line-height: 1.35; margin-bottom: 14px; flex-grow: 1; }
+
+    .counter-controls {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255, 255, 255, 0.04); padding: 6px 12px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+    .btn-count {
+      background: var(--gold-primary); color: #000; border: none;
+      width: 30px; height: 30px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 1.1rem;
+    }
+    .count-number { font-size: 1rem; font-weight: 800; color: #fff; }
+
+    /* Formulario Cadastro */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .form-control {
+      width: 100%; padding: 12px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-color); border-radius: var(--radius-md);
+      color: #fff; font-size: 0.9rem; outline: none;
+    }
+    .form-control:focus { border-color: var(--gold-primary); }
+    .form-row { display: flex; gap: 12px; }
+
+    /* CARRINHO SUSPENSO */
+    .floating-cart-btn {
+      position: fixed; bottom: 24px; right: 24px;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--gold-primary); color: #000;
+      border: none; cursor: pointer; z-index: 180;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; box-shadow: 0 8px 24px var(--gold-glow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .floating-cart-btn:hover { transform: scale(1.08); }
+    
+    .cart-badge {
+      position: absolute; top: -4px; right: -4px;
+      background: #e11d48; color: #fff; font-size: 0.75rem; font-weight: 800;
+      width: 22px; height: 22px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; border: 2px solid var(--bg-dark);
+    }
+
+    /* Modal / Drawer */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center;
+      z-index: 1000; backdrop-filter: blur(8px); padding: 16px;
+    }
+    .modal-content {
+      background: var(--bg-card); border: 1px solid var(--gold-primary);
+      border-radius: var(--radius-lg); padding: 26px; width: 100%; max-width: 500px;
+      position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .close-modal { position: absolute; top: 18px; right: 20px; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; }
+    
+    .cart-summary-box {
+      background: rgba(0,0,0,0.3); border-radius: var(--radius-md); padding: 14px;
+      margin: 16px 0; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .cart-summary-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88rem; }
+
+    .payment-options { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+    .btn-pay {
+      padding: 14px; border-radius: var(--radius-md); border: none; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.95rem;
+    }
+    .btn-pay:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-pix { background: #00bdae; color: #fff; }
+    .btn-card { background: #009ee3; color: #fff; }
+
+    /* Admin Panel Styles */
+    .order-card-admin {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); padding: 16px; margin-bottom: 14px;
+    }
+    .order-status-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem;
+      font-weight: 800; margin-bottom: 8px; text-transform: uppercase;
+    }
+    .status-iniciado { background: #3b82f6; color: #fff; }
+    .status-preparacao { background: #f59e0b; color: #000; }
+    .status-andamento { background: #8b5cf6; color: #fff; }
+    .status-entrega { background: #10b981; color: #fff; }
+
+    /* Footer & Instagram */
+    .app-footer {
+      border-top: 1px solid var(--border-color); margin-top: 40px; padding: 30px 20px;
+      text-align: center; color: var(--text-muted); font-size: 0.85rem;
+    }
+    .social-links { display: flex; justify-content: center; gap: 16px; margin: 16px 0; }
+    .btn-social {
+      width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-color); color: var(--gold-primary); font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.2s;
+    }
+    .btn-social:hover { background: var(--gold-primary); color: #000; }
+
+    .app-download-box { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+    .btn-pwa {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main);
+      padding: 8px 16px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; display: flex;
+      align-items: center; gap: 8px; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <a href="#" class="brand-logo-container">
+      <img src="unnamed.jpg" alt="Alpha Gourmet Logo" class="brand-logo-img">
+      <div class="brand-title">ALPHA <span>GOURMET</span></div>
+    </a>
+
+    <div class="header-actions">
+      <!-- WhatsApp Minimalista (Somente Logo) -->
+      <a href="https://wa.me/5585981714760" target="_blank" class="btn-whatsapp-icon" title="Atendimento WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <button class="hamburger-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </header>
+
+  <!-- Side Navigation Drawer -->
+  <div class="nav-drawer" id="navDrawer">
+    <i class="fa-solid fa-xmark close-drawer" onclick="toggleMenu()"></i>
+    <a href="#planos" onclick="toggleMenu()"><i class="fa-solid fa-gem"></i> Nossos Planos</a>
+    <a href="#cardapio" onclick="toggleMenu()"><i class="fa-solid fa-utensils"></i> Cardápio Elegante</a>
+    <a href="#cadastro" onclick="toggleMenu()"><i class="fa-solid fa-user-plus"></i> Cadastro de Cliente</a>
+    <a href="javascript:void(0)" onclick="toggleMenu(); abrirAcompanhamento()"><i class="fa-solid fa-truck-fast"></i> Acompanhar Pedido</a>
+    <a href="javascript:void(0)" onclick="toggleMenu(); abrirAdmin()"><i class="fa-solid fa-user-shield"></i> Painel Admin</a>
+    <a href="https://wa.me/5585981714760" target="_blank"><i class="fa-brands fa-whatsapp"></i> Suporte Direto</a>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="hero-banner">
+    <span class="hero-tag">Nutrição & Praticidade Premium</span>
+    <h1>Monte sua Assinatura Personalizada</h1>
+    <p>Escolha o plano ideal e adicione as marmitas no carrossel. Seu pedido ficará salvo no carrinho suspenso.</p>
+  </section>
+
+  <!-- 1. SEÇÃO DE PLANOS -->
+  <section class="section-block" id="planos">
+    <div class="section-title"><i class="fa-solid fa-layer-group"></i> 1. Selecione o Seu Plano</div>
+    <div class="planos-grid">
+      
+      <!-- Plano Fitness -->
+      <div class="card-plano-select selected" id="plano-fitness" onclick="selecionarPlano('Fitness')">
+        <div class="plano-header">
+          <span class="plano-nome">Plano Fitness</span>
+          <span class="plano-badge">Mais Popular</span>
+        </div>
+        <p class="plano-desc-text">Proteínas magras e vegetais balanceados para sua rotina saudável.</p>
+        <div class="periodo-buttons">
+          <button class="btn-periodo active" id="btn-fitness-semanal" onclick="event.stopPropagation(); setPeriodo('Fitness', 'semanal', 5, 125)">Semanal (5 un.)<br><strong>R$ 125,00</strong></button>
+          <button class="btn-periodo" id="btn-fitness-mensal" onclick="event.stopPropagation(); setPeriodo('Fitness', 'mensal', 20, 450)">Mensal (20 un.)<br><strong>R$ 450,00</strong></button>
+        </div>
+        <div class="plan-quantity-control">
+          <span class="plan-quantity-label">Qtd. de Planos:</span>
+          <div class="qty-btn-group">
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Fitness', -1)">-</button>
+            <span id="plano-qty-fitness" style="font-weight: 800;">1</span>
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Fitness', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plano Alpha -->
+      <div class="card-plano-select" id="plano-alpha" onclick="selecionarPlano('Alpha')">
+        <div class="plano-header">
+          <span class="plano-nome">Plano Alpha</span>
+          <span class="plano-badge">Dia a Dia</span>
+        </div>
+        <p class="plano-desc-text">Pratos caseiros completos, sabor equilibrado e nutrição diária.</p>
+        <div class="periodo-buttons">
+          <button class="btn-periodo active" id="btn-alpha-semanal" onclick="event.stopPropagation(); setPeriodo('Alpha', 'semanal', 5, 150)">Semanal (5 un.)<br><strong>R$ 150,00</strong></button>
+          <button class="btn-periodo" id="btn-alpha-mensal" onclick="event.stopPropagation(); setPeriodo('Alpha', 'mensal', 20, 500)">Mensal (20 un.)<br><strong>R$ 500,00</strong></button>
+        </div>
+        <div class="plan-quantity-control">
+          <span class="plan-quantity-label">Qtd. de Planos:</span>
+          <div class="qty-btn-group">
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Alpha', -1)">-</button>
+            <span id="plano-qty-alpha" style="font-weight: 800;">1</span>
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Alpha', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plano Prime -->
+      <div class="card-plano-select" id="plano-prime" onclick="selecionarPlano('Prime')">
+        <div class="plano-header">
+          <span class="plano-nome">Plano Prime</span>
+          <span class="plano-badge">Gourmet</span>
+        </div>
+        <p class="plano-desc-text">Cortes de carnes nobres e receitas exclusivas da alta gastronomia.</p>
+        <div class="periodo-buttons">
+          <button class="btn-periodo active" id="btn-prime-semanal" onclick="event.stopPropagation(); setPeriodo('Prime', 'semanal', 5, 175)">Semanal (5 un.)<br><strong>R$ 175,00</strong></button>
+          <button class="btn-periodo" id="btn-prime-mensal" onclick="event.stopPropagation(); setPeriodo('Prime', 'mensal', 20, 600)">Mensal (20 un.)<br><strong>R$ 600,00</strong></button>
+        </div>
+        <div class="plan-quantity-control">
+          <span class="plan-quantity-label">Qtd. de Planos:</span>
+          <div class="qty-btn-group">
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Prime', -1)">-</button>
+            <span id="plano-qty-prime" style="font-weight: 800;">1</span>
+            <button class="btn-qty-plan" onclick="event.stopPropagation(); alterarQtdPlano('Prime', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. SEÇÃO DE CARROSSEL FILTRADO -->
+  <section class="section-block" id="cardapio">
+    <div class="section-title" id="cardapioTitulo"><i class="fa-solid fa-utensils"></i> 2. Refeições Fitness Disponíveis</div>
+    
+    <div class="carousel-wrapper">
+      <button class="carousel-nav-btn prev" onclick="scrollCarousel(-280)"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="carousel-container" id="carouselMarmitas"></div>
+      <button class="carousel-nav-btn next" onclick="scrollCarousel(280)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- 3. CADASTRO DE CLIENTE & ENDEREÇO -->
+  <section class="section-block" id="cadastro">
+    <div class="section-title"><i class="fa-solid fa-user-plus"></i> 3. Dados para Entrega e Cadastro</div>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px;">
+      <div class="form-row">
+        <div class="form-group" style="flex:1;">
+          <label>Nome Completo:</label>
+          <input type="text" id="custNome" class="form-control" placeholder="Seu nome completo">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>WhatsApp / Telefone:</label>
+          <input type="tel" id="custTelefone" class="form-control" placeholder="(85) 98171-4760">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Endereço de Entrega Completo:</label>
+        <input type="text" id="custEndereço" class="form-control" placeholder="Rua, Número, Bairro, Ponto de Referência">
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="flex:1;">
+          <label>Cidade:</label>
+          <input type="text" id="custCidade" class="form-control" placeholder="Fortaleza">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <label>CEP:</label>
+          <input type="text" id="custCEP" class="form-control" placeholder="60000-000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARRINHO SUSPENSO FLUTUANTE -->
+  <button class="floating-cart-btn" onclick="abrirCarrinho()">
+    <i class="fa-solid fa-basket-shopping"></i>
+    <div class="cart-badge" id="cartBadgeCount">0</div>
+  </button>
+
+  <!-- MODAL CARRINHO SUSPENSO -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <i class="fa-solid fa-xmark close-modal" onclick="fecharCarrinho()"></i>
+      <h3 style="color: var(--gold-primary); font-family: 'Cinzel', serif; margin-bottom: 4px;">Seu Carrinho Suspenso</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted);" id="modalPlanoSub">Plano Fitness (1x) — SEMANAL</p>
+      
+      <div class="cart-summary-box">
+        <div class="cart-summary-line">
+          <span>Progresso de Marmitas:</span>
+          <strong id="modalProgressText" style="color: var(--gold-primary);">0 de 5</strong>
+        </div>
+        <div class="cart-summary-line">
+          <span>Valor Total:</span>
+          <strong id="modalTotalPrice">R$ 125,00</strong>
+        </div>
+      </div>
+
+      <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; max-height: 140px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;" id="resumoItensList">
+        Nenhum item selecionado ainda.
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">Pague com segurança via Mercado Pago:</p>
+
+      <div class="payment-options">
+        <button class="btn-pay btn-pix" id="btnPayPix" disabled onclick="finalizarEProcessar('PIX')"><i class="fa-solid fa-bolt"></i> Pagar com PIX</button>
+        <button class="btn-pay btn-card" id="btnPayCard" disabled onclick="finalizarEProcessar('Cartão de Crédito')"><i class="fa-solid fa-credit-card"></i> Cartão de Crédito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ADMIN DASHBOARD -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-content" style="max-width: 650px;">
+      <i class="fa-solid fa-xmark close-modal" onclick="fecharAdmin()"></i>
+      <h3 style="color: var(--gold-primary); font-family: 'Cinzel', serif; margin-bottom: 12px;"><i class="fa-solid fa-user-shield"></i> Painel Administrativo de Pedidos</h3>
+      <div id="adminOrdersContainer">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Nenhum pedido recebido até o momento.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ACOMPANHAMENTO CLIENTE -->
+  <div class="modal-overlay" id="trackModal">
+    <div class="modal-content">
+      <i class="fa-solid fa-xmark close-modal" onclick="fecharAcompanhamento()"></i>
+      <h3 style="color: var(--gold-primary); font-family: 'Cinzel', serif; margin-bottom: 12px;"><i class="fa-solid fa-truck-fast"></i> Acompanhar Seu Pedido</h3>
+      <div class="form-group">
+        <label>Digite o Número do Seu Pedido:</label>
+        <input type="text" id="trackInput" class="form-control" placeholder="Ex: #ALP-1001">
+      </div>
+      <button class="btn-pay btn-pix" style="width: 100%; margin-bottom: 16px;" onclick="buscarStatusPedido()">Buscar Status</button>
+      <div id="trackResultBox"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="brand-title">ALPHA <span>GOURMET</span></div>
+    <p style="margin-top: 6px;">Alta Gastronomia & Nutrição Personalizada</p>
+    
+    <div class="social-links">
+      <a href="https://instagram.com/worldtour.oficial" target="_blank" class="btn-social" title="Siga no Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/5585981714760" target="_blank" class="btn-social" title="Atendimento WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+    </div>
+
+    <div class="app-download-box">
+      <a href="#" class="btn-pwa"><i class="fa-brands fa-android" style="color: #3ddc84;"></i> App Android</a>
+      <a href="#" class="btn-pwa"><i class="fa-brands fa-apple" style="color: #fff;"></i> App iOS PWA</a>
+    </div>
+
+    <p style="margin-top: 20px; font-size: 0.75rem;">© 2026 Alpha Gourmet. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const mp = new MercadoPago('PUBLIC_KEY_AQUI', { locale: 'pt-BR' });
+
+    const marmitas = [
+      { id: 1, categoria: "Fitness", nome: "Frango Grelhado & Brócolis", desc: "Peito de frango temperado com ervas, arroz integral e brócolis ao alho.", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" },
+      { id: 2, categoria: "Fitness", nome: "Patinho Moído Low Carb", desc: "Carne magra bovina refogada, purê de batata-doce e vagem no vapor.", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500" },
+      { id: 3, categoria: "Fitness", nome: "Frango Desfiado com Abóbora", desc: "Frango desfiado leve com purê de cabotiá e mix de legumes grelhados.", img: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500" },
+      { id: 4, categoria: "Alpha", nome: "Bife Acebolado Tradicional", desc: "Tiras de alcatra acebolada, arroz branco soltinho, feijão e farofa rústica.", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500" },
+      { id: 5, categoria: "Alpha", nome: "Carne de Panela com Batata", desc: "Carne bovina ensopada macia com batatas cozidas e arroz com legumes.", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=500" },
+      { id: 6, categoria: "Alpha", nome: "Frango à Parmegiana Fit", desc: "Peito de frango assado ao molho caseiro de tomate, queijo leve e arroz.", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=500" },
+      { id: 7, categoria: "Prime", nome: "Mignon ao Molho Madeira", desc: "Medalhão de filé mignon ao molho madeira, arroz de castanhas e purê rústico.", img: "https://images.unsplash.com/photo-1558030006-450675393462?w=500" },
+      { id: 8, categoria: "Prime", nome: "Filé de Salmão com Aspargos", desc: "Salmão grelhado ao molho de maracujá, aspargos frescos e arroz 7 grãos.", img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500" },
+      { id: 9, categoria: "Prime", nome: "Risoto de Camarão Gourmet", desc: "Camarões rosa salteados no azeite com risoto cremoso de limão siciliano.", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500" }
+    ];
+
+    const tabelaPrecos = {
+      Fitness: { semanal: { qtdUnit: 5, precoUnit: 125 }, mensal: { qtdUnit: 20, precoUnit: 450 } },
+      Alpha: { semanal: { qtdUnit: 5, precoUnit: 150 }, mensal: { qtdUnit: 20, precoUnit: 500 } },
+      Prime: { semanal: { qtdUnit: 5, precoUnit: 175 }, mensal: { qtdUnit: 20, precoUnit: 600 } }
+    };
+
+    let estadoAtual = {
+      plano: 'Fitness',
+      periodo: 'semanal',
+      qtdPlano: 1,
+      metaQtdTotal: 5,
+      precoTotal: 125
+    };
+
+    let selecaoMarmitas = {};
+    let pedidosDB = [];
+    let pedidoContador = 1000;
+
+    function renderCarrossel() {
+      const container = document.getElementById('carouselMarmitas');
+      container.innerHTML = '';
+
+      const marmitasFiltradas = marmitas.filter(m => m.categoria === estadoAtual.plano);
+      document.getElementById('cardapioTitulo').innerHTML = `<i class="fa-solid fa-utensils"></i> 2. Refeições ${estadoAtual.plano} Disponíveis`;
+
+      marmitasFiltradas.forEach(m => {
+        const qtdAtual = selecaoMarmitas[m.id] || 0;
+        const card = document.createElement('div');
+        card.className = 'card-marmita-carousel';
+        card.innerHTML = `
+          <img src="${m.img}" alt="${m.nome}" class="marmita-img">
+          <div class="marmita-categoria">${m.categoria}</div>
+          <div class="marmita-titulo">${m.nome}</div>
+          <div class="marmita-detalhes">${m.desc}</div>
+          <div class="counter-controls">
+            <button class="btn-count" onclick="alterarQtdMarmita(${m.id}, -1)">-</button>
+            <span class="count-number" id="count-${m.id}">${qtdAtual}</span>
+            <button class="btn-count" onclick="alterarQtdMarmita(${m.id}, 1)">+</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function scrollCarousel(distance) {
+      document.getElementById('carouselMarmitas').scrollBy({ left: distance, behavior: 'smooth' });
+    }
+
+    function toggleMenu() {
+      document.getElementById('navDrawer').classList.toggle('active');
+    }
+
+    function selecionarPlano(nomePlano) {
+      document.querySelectorAll('.card-plano-select').forEach(card => card.classList.remove('selected'));
+      document.getElementById(`plano-${nomePlano.toLowerCase()}`).classList.add('selected');
+
+      estadoAtual.plano = nomePlano;
+      selecaoMarmitas = {};
+      recalcularMetaEPreco();
+      renderCarrossel();
+      document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setPeriodo(nomePlano, periodo) {
+      estadoAtual.plano = nomePlano;
+      estadoAtual.periodo = periodo;
+
+      const parentCard = document.getElementById(`plano-${nomePlano.toLowerCase()}`);
+      parentCard.querySelectorAll('.btn-periodo').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${nomePlano.toLowerCase()}-${periodo}`).classList.add('active');
+
+      selecaoMarmitas = {};
+      recalcularMetaEPreco();
+      renderCarrossel();
+      document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function alterarQtdPlano(nomePlano, delta) {
+      if (estadoAtual.plano !== nomePlano) {
+        selecionarPlano(nomePlano);
+      }
+      if (estadoAtual.qtdPlano + delta >= 1) {
+        estadoAtual.qtdPlano += delta;
+        document.getElementById(`plano-qty-${nomePlano.toLowerCase()}`).innerText = estadoAtual.qtdPlano;
+        recalcularMetaEPreco();
+      }
+    }
+
+    function recalcularMetaEPreco() {
+      const config = tabelaPrecos[estadoAtual.plano][estadoAtual.periodo];
+      estadoAtual.metaQtdTotal = config.qtdUnit * estadoAtual.qtdPlano;
+      estadoAtual.precoTotal = config.precoUnit * estadoAtual.qtdPlano;
+      atualizarEstadoCarrinho();
+    }
+
+    function alterarQtdMarmita(id, delta) {
+      const totalAtual = Object.values(selecaoMarmitas).reduce((a, b) => a + b, 0);
+      const atualItem = selecaoMarmitas[id] || 0;
+
+      if (delta > 0 && totalAtual >= estadoAtual.metaQtdTotal) {
+        alert(`Seu pacote atinge até ${estadoAtual.metaQtdTotal} refeições.`);
+        return;
+      }
+
+      if (atualItem + delta >= 0) {
+        selecaoMarmitas[id] = atualItem + delta;
+        document.getElementById(`count-${id}`).innerText = selecaoMarmitas[id];
+        atualizarEstadoCarrinho();
+      }
+    }
+
+    function atualizarEstadoCarrinho() {
+      const totalSelecionado = Object.values(selecaoMarmitas).reduce((a, b) => a + b, 0);
+      document.getElementById('cartBadgeCount').innerText = totalSelecionado;
+
+      document.getElementById('modalPlanoSub').innerText = `Plano ${estadoAtual.plano} (${estadoAtual.qtdPlano}x) — ${estadoAtual.periodo.toUpperCase()}`;
+      document.getElementById('modalProgressText').innerText = `${totalSelecionado} de ${estadoAtual.metaQtdTotal}`;
+      document.getElementById('modalTotalPrice').innerText = `R$ ${estadoAtual.precoTotal},00`;
+
+      const prontoParaPagar = totalSelecionado === estadoAtual.metaQtdTotal;
+      document.getElementById('btnPayPix').disabled = !prontoParaPagar;
+      document.getElementById('btnPayCard').disabled = !prontoParaPagar;
+    }
+
+    function abrirCarrinho() {
+      let resumoHtml = '<strong>Itens Escolhidos:</strong><br><br>';
+      let selecionouAlgum = false;
+
+      marmitas.forEach(m => {
+        if (selecaoMarmitas[m.id] > 0) {
+          resumoHtml += `• ${selecaoMarmitas[m.id]}x ${m.nome}<br>`;
+          selecionouAlgum = true;
+        }
+      });
+
+      if (!selecionouAlgum) {
+        resumoHtml = 'Nenhum item selecionado ainda no carrossel.';
+      }
+
+      document.getElementById('resumoItensList').innerHTML = resumoHtml;
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function fecharCarrinho() {
+      document.getElementById('checkoutModal').style.display = 'none';
+    }
+
+    function finalizarEProcessar(metodo) {
+      const nome = document.getElementById('custNome').value.trim();
+      const tel = document.getElementById('custTelefone').value.trim();
+      const end = document.getElementById('custEndereço').value.trim();
+
+      if (!nome || !tel || !end) {
+        alert('Por favor, preencha os seus dados de cadastro e endereço antes de finalizar.');
+        fecharCarrinho();
+        document.getElementById('cadastro').scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      pedidoContador++;
+      const numPedido = `#ALP-${pedidoContador}`;
+
+      const novoPedido = {
+        id: numPedido,
+        cliente: nome,
+        telefone: tel,
+        endereco: end,
+        plano: estadoAtual.plano,
+        periodo: estadoAtual.periodo,
+        qtdPlano: estadoAtual.qtdPlano,
+        valorTotal: estadoAtual.precoTotal,
+        metodoPagamento: metodo,
+        itens: { ...selecaoMarmitas },
+        status: 'Pedido Recebido',
+        data: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      pedidosDB.push(novoPedido);
+
+      alert(`Pedido ${numPedido} gerado com sucesso!\n\nStatus: Pedido Recebido\nVocê pode acompanhá-lo no menu 'Acompanhar Pedido'.`);
+      fecharCarrinho();
+      renderAdminOrders();
+    }
+
+    /* Admin e Acompanhamento Functions */
+    function abrirAdmin() { renderAdminOrders(); document.getElementById('adminModal').style.display = 'flex'; }
+    function fecharAdmin() { document.getElementById('adminModal').style.display = 'none'; }
+    function abrirAcompanhamento() { document.getElementById('trackModal').style.display = 'flex'; }
+    function fecharAcompanhamento() { document.getElementById('trackModal').style.display = 'none'; }
+
+    function renderAdminOrders() {
+      const box = document.getElementById('adminOrdersContainer');
+      if (pedidosDB.length === 0) {
+        box.innerHTML = '<p style="font-size: 0.85rem; color: var(--text-muted);">Nenhum pedido recebido até o momento.</p>';
+        return;
+      }
+
+      let html = '';
+      pedidosDB.forEach((p, idx) => {
+        let badgeClass = 'status-iniciado';
+        if (p.status === 'Em Preparação') badgeClass = 'status-preparacao';
+        if (p.status === 'Em Andamento') badgeClass = 'status-andamento';
+        if (p.status === 'Saiu para Entrega') badgeClass = 'status-entrega';
+
+        html += `
+          <div class="order-card-admin">
+            <div style="display:flex; justify-size:space-between; align-items:center;">
+              <strong style="color:var(--gold-primary);">${p.id}</strong> — ${p.cliente}
+              <span class="order-status-badge ${badgeClass}">${p.status}</span>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">
+              ${p.plano} (${p.qtdPlano}x) | R$ ${p.valorTotal},00 via ${p.metodoPagamento} | ${p.data}
+            </p>
+            <p style="font-size:0.8rem; color:#fff; margin-top:4px;"><i class="fa-solid fa-location-dot"></i> ${p.endereco}</p>
+            
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn-qty-plan" style="width:auto; padding:0 8px;" onclick="alterarStatusAdmin(${idx}, 'Pedido Recebido')">Recebido</button>
+              <button class="btn-qty-plan" style="width:auto; padding:0 8px;" onclick="alterarStatusAdmin(${idx}, 'Em Preparação')">Em Preparação</button>
+              <button class="btn-qty-plan" style="width:auto; padding:0 8px;" onclick="alterarStatusAdmin(${idx}, 'Em Andamento')">Em Andamento</button>
+              <button class="btn-qty-plan" style="width:auto; padding:0 8px;" onclick="alterarStatusAdmin(${idx}, 'Saiu para Entrega')">Saiu p/ Entrega</button>
+            </div>
+          </div>
+        `;
+      });
+      box.innerHTML = html;
+    }
+
+    function alterarStatusAdmin(index, novoStatus) {
+      pedidosDB[index].status = novoStatus;
+      renderAdminOrders();
+    }
+
+    function buscarStatusPedido() {
+      const code = document.getElementById('trackInput').value.trim().toUpperCase();
+      const p = pedidosDB.find(item => item.id.toUpperCase() === code);
+      const resBox = document.getElementById('trackResultBox');
+
+      if (!p) {
+        resBox.innerHTML = '<p style="color:#e11d48; font-size:0.85rem;">Pedido não encontrado. Verifique o código e tente novamente.</p>';
+        return;
+      }
+
+      resBox.innerHTML = `
+        <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; border:1px solid var(--gold-primary); margin-top:10px;">
+          <h4 style="color:var(--gold-primary);">${p.id} — Status do Pedido</h4>
+          <p style="font-size:1.1rem; font-weight:800; margin:8px 0; color:#fff;">Status: <span style="color:var(--gold-primary);">${p.status}</span></p>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Cliente: ${p.cliente} | Endereço: ${p.endereco}</p>
+        </div>
+      `;
+    }
+
+    renderCarrossel();
+    recalcularMetaEPreco();
+  </script>
+</body>
+</html>
